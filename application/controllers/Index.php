@@ -45,7 +45,7 @@ class Index extends BaseController
 
         $data['pendaftar'] = $prodi;
         $data['grafik1'] = json_encode($result);
-        $this->render('index/grafik_satu', $data);
+        $this->render('index/pendaftar', $data);
     }
 
     public function pendaftarprodi2()
