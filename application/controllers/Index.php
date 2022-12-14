@@ -1,77 +1,79 @@
-<?php
-defined('BASEPATH') or exit('No direct script access allowed');
+<?php 
 
-class Index extends BaseController
-{
+class index extends CI_Controller{
 
-    public function __construct()
+	public function __construct()
     {
         parent::__construct();
-        $this->load->model('M_pendaftaran', 'm_pendaftaran');
+        $this->load->model('M_pendaftaran');
     }
 
-    public function index()
-    {
-        $data['title'] = 'Dashboard';
-        $this->render('index/index', $data);
-    }
+	public function index() {
+		$data['title'] = 'Halaman Utama';
 
-    public function pendaftarprodi1()
-    {
-        $data['title'] = 'Grafik Berdasarkan Prodi 1';
-        $prodi = $this->M_pendaftaran->listProdi();
-        foreach ($prodi as $key => $p) {
-            $prodi[$key]['jumlah'] = $this->M_pendaftaran->jumlahPendaftarProdi1($p['id_prodi']);
-            $prodi[$key]['jumlah2'] = $this->M_pendaftaran->jumlahPendaftarProdi2($p['id_prodi']);
-            $prodi[$key]['size'] = rand(10, 30);
-        }
+		$this->load->view('template/app_top', $data);
+		$this->load->view('index/index');
+		$this->load->view('template/app_bottom');
 
-        //grafik pertama
-        $result = null;
-        foreach ($prodi as $p => $prod) {
-            // if ($prod['jumlah'] > $sum) {
-            //     $sum = $prod['jumlah'];
-            //     $sliced = true;
-            //     $selected = true;
-            // }
-            $result[$p] = [
-                "name"  => $prod['nama_prodi'],
-                "jumlah" => $prod['jumlah'],
-                "y"     => $prod['size'],
-                // "sliced" => $sliced,
-                // 'selected' => $selected
-            ];
-        }
+		// $this->render('home/index', $data);
+	}
 
-        $data['pendaftar'] = $prodi;
-        $data['grafik1'] = json_encode($result);
-        $this->render('index/pendaftar', $data);
-    }
+	public function grafikA(){
+		$data['title'] = 'Grafik Prodi 1';
 
-    public function pendaftarprodi2()
-    {
-        $data['title'] = 'Grafik Berdasarkan Prodi 2';
-        $prodi = $this->M_pendaftaran->listProdi();
-        foreach ($prodi as $key => $p) {
-            $prodi[$key]['jumlah'] = $this->M_pendaftaran->jumlahPendaftarProdi1($p['id_prodi']);
-            $prodi[$key]['jumlah2'] = $this->M_pendaftaran->jumlahPendaftarProdi2($p['id_prodi']);
-            $prodi[$key]['size'] = rand(10, 30);
-        }
+		$data['grafik'] = $this->M_pendaftaran->getJ1();
+		$this->load->view('template/app_top', $data);
+		$this->load->view('index/grafik_satu');
+		$this->load->view('template/app_bottom');
+	}
 
-        //grafik kedua
-        $hasil = null;
-        foreach ($prodi as $p => $prod) {
-            $hasil[$p] = [
-                "name"  => $prod['nama_prodi'],
-                "jumlah" => $prod['jumlah2'],
-                "y"     => $prod['size'],
-                // "sliced" => $sliced,
-                // 'selected' => $selected
-            ];
-        }
+	public function grafikB(){
+		$data['grafik'] = 'Grafik Prodi 2';
 
-        $data['pendaftar'] = $prodi;
-        $data['grafik2'] = json_encode($hasil);
-        $this->render('index/grafik_dua', $data);
-    }
+		$data['grafik'] = $this->M_pendaftaran->getJ2();
+		$this->load->view('template/app_top', $data);
+		$this->load->view('index/grafik_dua');
+		$this->load->view('template/app_bottom');
+	}
+
+	public function grafikC(){
+		$data['title'] = 'Grafik Prestasi';
+
+		$data['grafik'] = $this->M_pendaftaran->getJ3();
+		$this->load->view('template/app_top', $data);
+		$this->load->view('index/grafik_tiga');
+		$this->load->view('template/app_bottom');
+	}
+
+	public function grafikD(){
+		$data['title'] = 'Grafik Bank';
+
+		$data['grafik'] = $this->M_pendaftaran->getJ4();
+		$this->load->view('template/app_top', $data);
+		$this->load->view('index/grafik_empat');
+		$this->load->view('template/app_bottom');
+	}
+
+	public function grafikE(){
+		$data['title'] = 'Grafik Pendapatan Per-Bank';
+
+		$data['grafik'] = $this->M_pendaftaran->getJ5();
+		$this->load->view('template/app_top', $data);
+		$this->load->view('index/grafik_lima');
+		$this->load->view('template/app_bottom');
+	}
+
+	public function grafikF(){
+		$data['title'] = 'Grafik Pendaftar Per-Bank';
+
+		$data['grafik'] = $this->M_pendaftaran->getJ6();
+		$this->load->view('template/app_top', $data);
+		$this->load->view('index/grafik_enam');
+		$this->load->view('template/app_bottom');
+	}
+	
 }
+
+
+
+ ?>
